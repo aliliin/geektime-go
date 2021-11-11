@@ -1,0 +1,17 @@
+name: "user-service"
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  db: "shop_goods_srv"
+  user: "root"
+  password: "root"
+redis:
+  host: "127.0.0.1"
+  port: 6379
+consul:
+  host: "127.0.0.1"
+  port: 8500
+http:
+  port: 8888
+grpc:
+  port: 8889
