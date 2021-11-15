@@ -12,11 +12,15 @@ import (
 )
 
 func InitServer() (*server.UserServer, error) {
-	wire.Build(server.NewUserServer,
+	wire.Build(
+		server.NewUserServer,
 		server.NewGrpcServer,
 		server.NewHttpServer,
 		biz.NewUserService,
+		//biz.NewUserDBService,
 		data.NewInMemoUserDao,
+		//data.NewUserDao,
+		data.NewDB,
 		config.NewConfig,
 		config.InitConfig)
 	return &server.UserServer{}, nil

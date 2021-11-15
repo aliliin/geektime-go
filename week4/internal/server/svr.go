@@ -15,18 +15,19 @@ type Server interface {
 }
 
 type UserServer struct {
-	grpcServer *GrpcServer
-	httpServer *HttpServer
-	config     *config.Config
-	ctx        context.Context
-	cancelF    context.CancelFunc
+	grpcServer  *GrpcServer
+	httpServer  *HttpServer
+	config      *config.Config
+	ctx         context.Context
+	cancelF     context.CancelFunc
 }
 
 func NewUserServer(grpc *GrpcServer, http *HttpServer, config *config.Config) *UserServer {
 	return &UserServer{
-		grpcServer: grpc,
-		httpServer: http,
-		config:     config,
+		grpcServer:  grpc,
+		httpServer:  http,
+		//httpServers: https,
+		config:      config,
 	}
 }
 

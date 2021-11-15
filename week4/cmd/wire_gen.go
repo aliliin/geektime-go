@@ -15,14 +15,18 @@ import (
 // Injectors from wire.go:
 
 func InitServer() (*server.UserServer, error) {
-	userDaoInf := data.NewInMemoUserDao()
-	userService := biz.NewUserService(userDaoInf)
-	grpcServer := server.NewGrpcServer(userService)
-	httpServer := server.NewHttpServer(userService)
 	viper, err := config.InitConfig()
 	if err != nil {
 		return nil, err
 	}
+	dataData, err := data.NewDB(viper)
+	if err != nil {
+		return nil, err
+	}
+	userDaoInf := data.NewInMemoUserDao(dataData)
+	userService := biz.NewUserService(userDaoInf)
+	grpcServer := server.NewGrpcServer(userService)
+	httpServer := server.NewHttpServer(userService)
 	configConfig := config.NewConfig(viper)
 	userServer := server.NewUserServer(grpcServer, httpServer, configConfig)
 	return userServer, nil

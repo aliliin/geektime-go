@@ -19,6 +19,20 @@ func NewUserService(dao data.UserDaoInf) *UserService {
 	}
 }
 
+type UserServices struct {
+	userDaos data.UserDaoInfo
+}
+
+func NewUserDBService(dao data.UserDaoInfo) *UserServices {
+	return &UserServices{
+		userDaos: dao,
+	}
+}
+
+func (service *UserService) GetUser(ctx context.Context, username string) (model.User, error) {
+	return service.userDao.GetUser(username)
+}
+
 func (service *UserService) Register(ctx context.Context, user model.User) (bool, error) {
 	return service.userDao.Create(user)
 }

@@ -28,8 +28,15 @@ func NewHttpServer(userService *biz.UserService) *HttpServer {
 	}
 	server.router.POST("/userservice/api/v1/register", server.Register)
 	server.router.POST("/userservice/api/v1/login", server.Login)
+	server.router.POST("/userservice/api/v1/user", server.GetUser)
 	server.svr.Handler = server.router
 	return server
+}
+
+type HttpServers struct {
+	userService *biz.UserServices
+	router      *gin.Engine
+	svr         *http.Server
 }
 
 func (server *HttpServer) Register(ctx *gin.Context) {
@@ -125,6 +132,46 @@ func (server *HttpServer) Login(ctx *gin.Context) {
 		return
 	}
 	if result {
+		ctx.JSON(200, pb.Response{
+			Code:    200,
+			Message: "success",
+			Data:    true,
+		})
+	} else {
+		ctx.JSON(200, pb.Response{
+			Code:    200,
+			Message: "password error",
+		})
+	}
+}
+
+func (server *HttpServer) GetUser(ctx *gin.Context) {
+	userName := ""
+	if userName, ok := ctx.GetPostForm("username"); !ok || userName == "" {
+		ctx.JSON(400, pb.Response{
+			Code:    400,
+			Message: "用户名不能为空",
+		})
+		return
+	}
+
+	result, err := server.userService.GetUser(ctx.Request.Context(), userName)
+	if err != nil {
+		if errors.Is(err, data.ErrNotExist) {
+			ctx.JSON(200, pb.Response{
+				Code:    200,
+				Message: "用户找到了",
+			})
+		} else {
+			fmt.Printf("internal server error, %s", err)
+			ctx.JSON(500, pb.Response{
+				Code:    500,
+				Message: "internal server error",
+			})
+		}
+		return
+	}
+	if result.UserName != "" {
 		ctx.JSON(200, pb.Response{
 			Code:    200,
 			Message: "success",

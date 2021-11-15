@@ -2,9 +2,9 @@ name: "user-service"
 mysql:
   host: "127.0.0.1"
   port: 3306
-  db: "shop_goods_srv"
   user: "root"
   password: "root"
+  db: "shop_user_srv"
 redis:
   host: "127.0.0.1"
   port: 6379
