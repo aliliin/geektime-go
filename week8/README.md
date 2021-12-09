@@ -42,5 +42,5 @@
 
 相同长度的 `value` 在写入数量越多情况下，平均每个 `value` 占用内存更多。
 
-![memory](/Users/aliliin/sites/golang/geektime-go/week8/memory.png)
+![memory](https://github.com/aliliin/geektime-go/blob/main/week8/memory.png)
 
