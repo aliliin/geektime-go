@@ -13,6 +13,7 @@ var Set = wire.NewSet(
 )
 
 func HelloRpcClient(config *viper.Viper) proto.UserClient {
+	// 127.0.0.1:8889
 	conn, err := grpc.Dial(config.GetString("grpc.port"), grpc.WithInsecure())
 	if err != nil {
 		grpclog.Fatalln(err)

@@ -14,4 +14,4 @@ consul:
 http:
   port: 8888
 grpc:
-  port: 8889
+  port: "127.0.0.1:8889"
