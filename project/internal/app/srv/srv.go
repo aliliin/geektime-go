@@ -1,22 +1,29 @@
 package srv
 
 import (
-	"fmt"
+	"context"
 	"github.com/spf13/viper"
+	"project/internal/databases"
 )
 
 type App struct {
-	Configs *viper.Viper
+	Configs    *viper.Viper
+	Bootloader *Bootloader
+	DB         *databases.Data
 }
 
 func (p *App) Run() error {
 	// Run("里面不指定端口号默认为8080")
-	fmt.Println(p.Configs.GetString("http.port"))
+	p.Bootloader.HttpInitializer.Router.Run(":" + p.Configs.GetString("http.port"))
 	p.afterStart()
 	return nil
 }
 
 func (p *App) Init() *App {
+	err := p.Bootloader.Boot(context.Background())
+	if err != nil {
+		panic(err)
+	}
 	return p
 }
 
