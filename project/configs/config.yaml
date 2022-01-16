@@ -1,0 +1,17 @@
+name: "service"
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "root"
+  db: "user_srv"
+redis:
+  host: "127.0.0.1"
+  port: 6379
+consul:
+  host: "127.0.0.1"
+  port: 8500
+http:
+  port: 8888
+grpc:
+  port: 8889
